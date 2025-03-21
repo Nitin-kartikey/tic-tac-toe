@@ -1,27 +1,33 @@
-body{
+body {
     font-family: sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: white;
+    background-color: skyblue;
+    margin: 0;
 }
-.game-container{
+.game-container {
     text-align: center;
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
-.game-board{
+
+.game-board {
     display: grid;
-    grid-template-columns: repeat(3,100px);
-    grid-template-rows: repeat(3,100px);
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
     gap: 5px;
+    background-color: white;
     margin-bottom: 20px;
+    position: relative;
 }
-.cell{
+
+.cell {
     width: 100%;
     height: 100%;
-    background-color: red;
+    background-color: #f4c678;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,7 +35,18 @@ body{
     font-weight: bold;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.s transform 0.2s;
+    position: relative;
+    transition: background-color 0.3s ease-in-out;
+}
+.cell.X,
+.cell.O {
+    animation: fadeIn 0.3s ease-in-out;
+}
+.cell.X {
+    color: #e74c3c;
+}
+.cell.O {
+    color: #3498db;
 }
 .status {
     font-size: 24px;
@@ -45,14 +62,144 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
 }
-.x-mark {
-    color: gray;
-}
-.o-mark {
-    color: #3498db;
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.1);
 }
 .win {
     background-color: #aaffaa;
+    animation: winEffect 0.5s ease-in-out infinite alternate;
 }
+.diagonal-line {
+    position: absolute;
+    background-color: red;
+    height: 5px;
+    border-radius: 5px;
+    transform-origin: right;
+    z-index: 10;
+    animation: drawLine 0.5s ease-out forwards;
+}
+.diagonal-0-4-8 {
+    width: 0;
+    height: 5px;
+    background-color: red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    transform-origin: center;
+    animation: drawDiagonalLine 0.5s ease-out forwards;
+}
+.diagonal-2-4-6 {
+    width: 0;
+    height: 5px;
+    background-color: red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    transform-origin: center;
+    animation: drawDiagonalLine 0.5s ease-out forwards;
+}
+.horizontal-0-1-2 {
+    width: 310px;
+    top: 50px;
+    left: 0;
+}
+.horizontal-3-4-5 {
+    width: 310px;
+    top: 155px;
+    left: 0;
+}
+.horizontal-6-7-8 {
+    width: 310px;
+    top: 260px;
+    left: 0;
+}
+.vertical-0-3-6,
+.vertical-1-4-7,
+.vertical-2-5-8 {
+    width: 5px;
+    background-color: red;
+    position: absolute;
+    top: 0;
+    left: 50px;
+    border-radius: 5px;
+    height: 0;
+    animation: drawVerticalLine 0.5s ease-out forwards;
+}
+
+.vertical-1-4-7 {
+    left: 155px;
+}
+
+.vertical-2-5-8 {
+    left: 260px;
+}
+.horizontal-0-1-2, 
+.horizontal-3-4-5, 
+.horizontal-6-7-8{
+    animation: drawLine 0.5s ease-out forwards;
+}
+.diagonal-0-4-8, 
+.diagonal-2-4-6 {
+    animation: drawDiagonalLine 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@keyframes drawHorizontalLine {
+    from {
+        opacity: 0;
+        height: 0;
+    }
+    to {
+        opacity: 1;
+        height: 5px;
+    }
+}
+
+@keyframes drawLine {
+    from {
+        opacity: 0;
+        width: 0;
+    }
+    to {
+        opacity: 1;
+        width: 310px;
+    }
+}
+.diagonal-0-4-8, .diagonal-2-4-6 {
+    animation: drawDiagonalLine 0.5s ease-out forwards;
+}
+@keyframes drawDiagonalLine {
+    from {
+        opacity: 0;
+        width: 0;
+    }
+    to {
+        opacity: 1;
+        width: 410px;
+    }
+}
+@keyframes drawVerticalLine {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+    to {
+        height: 310px;
+        opacity: 1;
+    }
+}
+
